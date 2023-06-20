@@ -1,27 +1,34 @@
-class Solution {
-public:
-    int strStr(string haystack, string needle) {
-        int ans=-1;
-        int k=0;  
-        int niddilesize=needle.size();
-        while(k<haystack.size()){
-            
-        auto itr=find(haystack.begin()+k,haystack.end(),needle[0]);
-        int n=itr-haystack.begin();
-        string str=haystack.substr(n,niddilesize);
-        if(str==needle){
-           ans=n; 
+    // z funtion -> pattern $ string, find the pattern in the string if(needle.length() == 0) return 0; string str = needle + "$" + haystack;
+    
+    int l=0, r=0, n=str.length();
+    vector<int> z(str.length());
+    for(int i=1; i<n; i++){
+        if(i>r){
+            l=r=i;
+            while(r<n && str[r-l] == str[r])
+                r++;
+            z[i] = r-l;
+            r--;
+        }
+        else if(i + z[i-l] <= r){
+            z[i] = z[i-l];
+        }
+        else{
+            l=i;
+            while(r<n && str[r-l] == str[r])
+                r++;
+            z[i] = r-l;
+            r--;
+        }
+    }
+    
+    int ans=-1;
+
+    for(int i=0; i<z.size(); i++){
+        if(z[i] == needle.length()){
+            ans = i - needle.length() - 1;
             break;
         }
-       else 
-
-           k=k+1;
-           continue;
-         }
-        
-        if(ans==-1)
-            return -1;
-        else
-            return ans;
     }
-};
+    return ans;
+}
