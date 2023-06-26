@@ -1,7 +1,7 @@
 class MedianFinder {
 private:
     priority_queue<int>max_heap;
-    priority_queue<int, std::vector<int>, std::greater<int>>min_heap;
+    priority_queue<int, vector<int>, greater<int>>min_heap;
 public:
     
     void addNum(int num) {
